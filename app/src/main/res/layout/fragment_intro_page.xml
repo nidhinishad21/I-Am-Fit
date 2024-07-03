@@ -9,11 +9,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
         android:textColor="?attr/colorPrimary"
         android:fontFamily="@font/roboto_slab"
         android:text=""
         android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/weightInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your weight (kg)"
+        android:inputType="numberDecimal"
+        android:visibility="gone"
+        android:layout_below="@id/textView"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/heightInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your height (cm)"
+        android:inputType="numberDecimal"
+        android:visibility="gone"
+        android:layout_below="@id/weightInput"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/dateOfBirthButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Date of Birth"
+        android:visibility="gone"
+        android:layout_below="@id/heightInput"
+        android:layout_marginTop="16dp"/>
 
     <Button
         android:id="@+id/leftButton"
