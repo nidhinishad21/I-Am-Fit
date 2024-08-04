@@ -8,8 +8,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "MyPrefsFile8";
-    private static final String HAS_SEEN_INTRO = "HasSeenIntro8";
+    public static final String PREFS_NAME = "Pref101";
+    public static final String HAS_SEEN_INTRO = "Seen101";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +27,6 @@ public class MainActivity extends AppCompatActivity {
             ViewPager2 viewPager = findViewById(R.id.viewPager);
             ViewPagerAdapter adapter = new ViewPagerAdapter(this);
             viewPager.setAdapter(adapter);
-
-            viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                @Override
-                public void onPageSelected(int position) {
-                    super.onPageSelected(position);
-                    // If the last page is reached, set the flag and proceed to main activity
-                    if (position == adapter.getItemCount() - 1) {
-                        SharedPreferences.Editor editor = settings.edit();
-                        editor.putBoolean(HAS_SEEN_INTRO, true);
-                        editor.apply();
-                    }
-                }
-            });
         }
     }
 

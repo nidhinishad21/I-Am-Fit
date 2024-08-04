@@ -184,10 +184,6 @@ public class AddActivityActivity extends AppCompatActivity {
         String type = activityTypeGroup.getCheckedRadioButtonId() == R.id.foodRadioButton ? "Food" : "Exercise";
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-        if (type.equals("Exercise")) {
-            calories = -calories;  // Make exercise calories negative
-        }
-
         dbHelper.addActivity(type, date, calories, activityName);
 
         Toast.makeText(this, "Activity added successfully", Toast.LENGTH_SHORT).show();

@@ -36,13 +36,50 @@
         android:layout_below="@id/weightInput"
         android:layout_marginTop="16dp"/>
 
+    <TextView
+        android:id="@+id/genderText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/heightInput"
+        android:layout_margin="15dp"
+        android:text="Radio Group in Android"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/genderGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/genderText"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <RadioButton
+            android:id="@+id/maleRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:checked="true"/>
+
+        <RadioButton
+            android:id="@+id/femaleRadioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:layout_marginStart="16dp"/>
+    </RadioGroup>
+
     <Button
         android:id="@+id/dateOfBirthButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Date of Birth"
         android:visibility="gone"
-        android:layout_below="@id/heightInput"
+        android:layout_below="@id/genderGroup"
         android:layout_marginTop="16dp"/>
 
     <Button

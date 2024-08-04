@@ -17,7 +17,7 @@ import java.util.Locale;
 public class UserDetailsDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "user_activities.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String TABLE_ACTIVITIES = "activities";
     private static final String COLUMN_ID = "id";
@@ -30,6 +30,7 @@ public class UserDetailsDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_USER_ID = "user_id";
     private static final String COLUMN_HEIGHT = "height";
     private static final String COLUMN_WEIGHT = "weight";
+    private static final String COLUMN_GENDER = "gender";
     private static final String COLUMN_DATE_OF_BIRTH = "date_of_birth";
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -52,7 +53,8 @@ public class UserDetailsDatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + COLUMN_HEIGHT + " REAL,"
                 + COLUMN_WEIGHT + " REAL,"
-                + COLUMN_DATE_OF_BIRTH + " TEXT" + ")";
+                + COLUMN_DATE_OF_BIRTH + " TEXT,"
+                + COLUMN_GENDER + " TEXT" + ")";
         db.execSQL(CREATE_USER_DETAILS_TABLE);
     }
 
@@ -99,12 +101,13 @@ public class UserDetailsDatabaseHelper extends SQLiteOpenHelper {
         return activityList;
     }
 
-    public void addUserDetails(float height, float weight, Date dateOfBirth) {
+    public void addUserDetails(float height, float weight, Date dateOfBirth, String gender) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_HEIGHT, height);
         values.put(COLUMN_WEIGHT, weight);
         values.put(COLUMN_DATE_OF_BIRTH, dateFormat.format(dateOfBirth));
+        values.put(COLUMN_GENDER, gender);
         db.insert(TABLE_USER_DETAILS, null, values);
         db.close();
     }
@@ -126,6 +129,7 @@ public class UserDetailsDatabaseHelper extends SQLiteOpenHelper {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            userDetails.setGender(cursor.getString(cursor.getColumnIndex(COLUMN_GENDER)));
         }
 
         cursor.close();

@@ -6,6 +6,7 @@ public class UserDetails {
     private float height;
     private float weight;
     private Date dateOfBirth;
+    private String gender;
 
     public float getHeight() {
         return height;
@@ -29,5 +30,13 @@ public class UserDetails {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

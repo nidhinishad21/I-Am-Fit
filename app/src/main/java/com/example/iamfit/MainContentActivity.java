@@ -87,22 +87,23 @@ public class MainContentActivity extends AppCompatActivity {
 
     private void updateCalorieSummary(List<ActivityItem> exerciseItems, List<ActivityItem> foodItems) {
         int totalCalories = 0;
-        for (ActivityItem item : exerciseItems) {
-            totalCalories -= item.getCalories();
-        }
         for (ActivityItem item : foodItems) {
-            totalCalories += item.getCalories();
+            totalCalories = totalCalories + item.getCalories();
+        }
+
+        for (ActivityItem item : exerciseItems) {
+            totalCalories = totalCalories - item.getCalories();
         }
 
         UserDetails userDetails = dbHelper.getUserDetails();
         int bmr = calculateBMR(userDetails);
-        int netCalories = bmr - totalCalories;
+        int netCalories = totalCalories - bmr;
 
         String summaryText;
         if (netCalories > 0) {
-            summaryText = "Excess calories today: " + netCalories;
+            summaryText = "Excess calories today: " + netCalories  + " . Please exercise more today.";
         } else {
-            summaryText = "Deficit calories today: " + Math.abs(netCalories);
+            summaryText = "Deficit calories today: " + Math.abs(netCalories)  + " . Please eat more.";
         }
 
         totalCaloriesTextView.setText(summaryText);
@@ -121,9 +122,19 @@ public class MainContentActivity extends AppCompatActivity {
 
     private int calculateBMR(UserDetails userDetails) {
         int age = calculateAge(userDetails.getDateOfBirth());
-        // Simple BMR calculation (Harris-Benedict equation)
-        // Note: This calculation doesn't take gender into account now
-        return (int) (88.362 + (13.397 * userDetails.getWeight()) + (4.799 * userDetails.getHeight()) - (5.677 * age));
+        float weight = userDetails.getWeight(); // in kg
+        float height = userDetails.getHeight(); // in cm
+        String gender = userDetails.getGender();
+
+        // Mifflin-St Jeor Equation
+        double bmr;
+        if (gender.equalsIgnoreCase("male")) {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+        } else {
+            bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+        }
+
+        return (int) Math.round(bmr);
     }
 
     private class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {

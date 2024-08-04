@@ -2,6 +2,7 @@ package com.example.iamfit;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -48,6 +50,7 @@ public class IntroPageFragment extends Fragment {
         Button dateOfBirthButton = view.findViewById(R.id.dateOfBirthButton);
         Button leftButton = view.findViewById(R.id.leftButton);
         Button rightButton = view.findViewById(R.id.rightButton);
+        RadioGroup radioGroup = view.findViewById(R.id.genderGroup);
 
         if (getArguments() != null) {
             textView.setText(getArguments().getString(ARG_TEXT));
@@ -64,6 +67,7 @@ public class IntroPageFragment extends Fragment {
                 weightInput.setVisibility(View.VISIBLE);
                 heightInput.setVisibility(View.VISIBLE);
                 dateOfBirthButton.setVisibility(View.VISIBLE);
+                radioGroup.setVisibility(View.VISIBLE);
 
                 dateOfBirthButton.setOnClickListener(v -> {
                     Calendar calendar = Calendar.getInstance();
@@ -82,6 +86,7 @@ public class IntroPageFragment extends Fragment {
                     String weightStr = weightInput.getText().toString();
                     String heightStr = heightInput.getText().toString();
                     DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+                    String gender = radioGroup.getCheckedRadioButtonId() == R.id.maleRadioButton ? "Male" : "Female";
                     Date dob = null;
                     try {
                         dob = formatter.parse(dateOfBirthButton.getText().toString());
@@ -98,7 +103,7 @@ public class IntroPageFragment extends Fragment {
                     float height = Float.parseFloat(heightStr);
 
                     // Save to SQLite Database
-                    saveUserDetails(weight, height, dob);
+                    saveUserDetails(weight, height, dob, gender);
 
                     // Proceed to main activity
                     proceedToMainActivity();
@@ -113,12 +118,16 @@ public class IntroPageFragment extends Fragment {
         return view;
     }
 
-    private void saveUserDetails(float weight, float height, Date dateOfBirth) {
+    private void saveUserDetails(float weight, float height, Date dateOfBirth, String gender) {
         UserDetailsDatabaseHelper dbHelper = new UserDetailsDatabaseHelper(getContext());
-        dbHelper.addUserDetails(weight, height, dateOfBirth);
+        dbHelper.addUserDetails(weight, height, dateOfBirth, gender);
     }
 
     private void proceedToMainActivity() {
+        SharedPreferences settings = this.getActivity().getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(MainActivity.HAS_SEEN_INTRO, true);
+        editor.apply();
         Intent intent = new Intent(getActivity(), MainContentActivity.class);
         startActivity(intent);
         getActivity().finish();
