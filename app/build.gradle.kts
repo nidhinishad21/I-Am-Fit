@@ -35,5 +35,5 @@ dependencies {
     implementation(libs.androidx.viewpager2)
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation(libs.material)
-
+    implementation("com.android.volley:volley:1.2.1")
 }

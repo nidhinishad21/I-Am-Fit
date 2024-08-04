@@ -8,8 +8,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String PREFS_NAME = "MyPrefsFile2";
-    private static final String HAS_SEEN_INTRO = "HasSeenIntro2";
+    private static final String PREFS_NAME = "MyPrefsFile8";
+    private static final String HAS_SEEN_INTRO = "HasSeenIntro8";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

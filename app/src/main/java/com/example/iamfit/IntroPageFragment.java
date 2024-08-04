@@ -16,7 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class IntroPageFragment extends Fragment {
 
@@ -76,15 +81,21 @@ public class IntroPageFragment extends Fragment {
                 rightButton.setOnClickListener(v -> {
                     String weightStr = weightInput.getText().toString();
                     String heightStr = heightInput.getText().toString();
-                    String dob = dateOfBirthButton.getText().toString();
+                    DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+                    Date dob = null;
+                    try {
+                        dob = formatter.parse(dateOfBirthButton.getText().toString());
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     if (TextUtils.isEmpty(weightStr) || TextUtils.isEmpty(heightStr) || dob.equals("Select Date of Birth")) {
                         Toast.makeText(getContext(), "Please fill in all details", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    double weight = Double.parseDouble(weightStr);
-                    double height = Double.parseDouble(heightStr);
+                    float weight = Float.parseFloat(weightStr);
+                    float height = Float.parseFloat(heightStr);
 
                     // Save to SQLite Database
                     saveUserDetails(weight, height, dob);
@@ -102,9 +113,9 @@ public class IntroPageFragment extends Fragment {
         return view;
     }
 
-    private void saveUserDetails(double weight, double height, String dateOfBirth) {
+    private void saveUserDetails(float weight, float height, Date dateOfBirth) {
         UserDetailsDatabaseHelper dbHelper = new UserDetailsDatabaseHelper(getContext());
-        dbHelper.insertUserDetails(weight, height, dateOfBirth);
+        dbHelper.addUserDetails(weight, height, dateOfBirth);
     }
 
     private void proceedToMainActivity() {
