@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class AddActivityActivity extends AppCompatActivity {
+public class AddActivityActivity extends BaseActivity {
 
     private static final String API_KEY = "aAggs2us0amxj/9TqfYrAQ==lhAc8lzH7kXFAJjs";
     private static final String API_NINJA_API_KEY = "aAggs2us0amxj/9TqfYrAQ==SUnGUB4272TsIMf8";
@@ -50,6 +50,7 @@ public class AddActivityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_activity);
+        onCreateDrawer();
 
         dbHelper = new UserDetailsDatabaseHelper(this);
 

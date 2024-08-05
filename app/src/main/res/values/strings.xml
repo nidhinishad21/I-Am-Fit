@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">I Am Fit</string>
+
+    <!-- Navigation Drawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Menu Items -->
+    <string name="menu_home">Home</string>
+    <string name="menu_history">History</string>
+
+    <!-- Other strings -->
+    <string name="no_exercise_recorded">No exercise recorded</string>
+    <string name="no_food_recorded">No food recorded</string>
+    <string name="exercise_activities">Exercise Activities</string>
+    <string name="food_intake">Food Intake</string>
+    <string name="calorie_summary">Calorie Summary</string>
+
 </resources>

@@ -3,15 +3,23 @@ package com.example.iamfit;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -19,8 +27,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class MainContentActivity extends AppCompatActivity {
+public class MainContentActivity extends BaseActivity {
 
+    private DrawerLayout drawer;
     private RecyclerView exerciseRecyclerView;
     private RecyclerView foodRecyclerView;
     private TextView totalCaloriesTextView;
@@ -32,6 +41,7 @@ public class MainContentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_content);
+        onCreateDrawer();
 
         dbHelper = new UserDetailsDatabaseHelper(this);
 
