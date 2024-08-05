@@ -97,8 +97,10 @@ public class AddActivityActivity extends BaseActivity {
                     try {
                         JSONArray items = response.getJSONArray("items");
                         if (items.length() > 0) {
-                            JSONObject item = items.getJSONObject(0);
-                            calories = item.getInt("calories");
+                            for (int i = 0; i < items.length(); i++) {
+                                JSONObject item = items.getJSONObject(i);
+                                calories += item.getInt("calories");
+                            }
                             caloriesTextView.setText("Calories: " + calories);
                         } else {
                             showErrorDialog("Food could not be found, please try something else");
