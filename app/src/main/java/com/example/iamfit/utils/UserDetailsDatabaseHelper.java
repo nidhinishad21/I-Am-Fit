@@ -1,4 +1,4 @@
-package com.example.iamfit;
+package com.example.iamfit.utils;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -6,6 +6,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.iamfit.models.ActivityItem;
+import com.example.iamfit.models.UserDetails;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -99,6 +102,23 @@ public class UserDetailsDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return activityList;
+    }
+
+    public int getTotalCaloriesForDate(String date, String type) {
+        String selectQuery = "SELECT SUM(" + COLUMN_CALORIES + ") FROM " + TABLE_ACTIVITIES +
+                " WHERE " + COLUMN_DATE + " = ? AND " + COLUMN_TYPE + " = ?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{date, type});
+
+        int totalCalories = 0;
+        if (cursor.moveToFirst()) {
+            totalCalories = cursor.getInt(0);
+        }
+
+        cursor.close();
+        db.close();
+        return totalCalories;
     }
 
     public void addUserDetails(float height, float weight, Date dateOfBirth, String gender) {

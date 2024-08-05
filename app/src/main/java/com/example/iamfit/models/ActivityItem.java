@@ -1,4 +1,4 @@
-package com.example.iamfit;
+package com.example.iamfit.models;
 
 public class ActivityItem {
     private String name;
